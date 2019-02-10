@@ -1,0 +1,7 @@
+Install ruby https://www.ruby-lang.org/en/downloads/
+
+Install
+>bundler install
+
+run from project folder
+>ruby ./init.rb
