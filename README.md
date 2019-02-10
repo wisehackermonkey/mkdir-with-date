@@ -1,1 +1,1 @@
-"# mkdir-with-date" 
+# mkdir-with-date
