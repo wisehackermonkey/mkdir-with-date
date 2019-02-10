@@ -7,23 +7,19 @@
 require "date"
 
 class Helper 
-	attr_reader :current_dir
-	attr_reader :formated_dir_name
-	attr_reader :date
-	attr_reader :formated_date
-	attr_reader :folder_name
-
+	attr_reader :name, :current_dir, :formated_dir_name, :date, :formated_date, :folder_name
 
 	def initialize(opt={})
-		@current_dir = opt[:date] || Dir.pwd
+		@current_dir = opt[:pwd] || Dir.pwd
 		@date = opt[:date] || Date.today
 	end
 
 	def create_project(name)
-		get_formated_date(self.date)
-		self.format_directory_name(name)
-		@folder_name = "#{self.formated_date}_#{self.formated_dir_name}"
-		unless self.create_directory(@folder_name)
+		@name = name
+		get_formated_date()
+		format_directory_name()
+		@folder_name = "#{formated_date}_#{formated_dir_name}"
+		unless create_directory()
 			puts "Error: Folder name already exists."
 			return false
 		end
@@ -31,7 +27,8 @@ class Helper
 		return true
 	end
 
-	def create_directory(name)
+	def create_directory(opt={})
+		name = opt[:name] || @folder_name
 		path = File.join(Dir.pwd, name,"")
 		unless File.directory?(path)
 			Dir.mkdir(name)
@@ -40,15 +37,17 @@ class Helper
 		return false
 	end
 
-	def get_formated_date(date)
+	def get_formated_date(opt={})
+		date = opt[:date] || @date
 		day = sprintf('%02d',date.day)
 		month = sprintf('%02d',date.month)
 		year = date.year
 		@formated_date = "#{year}#{month}#{day}" 
 	end
 
-	def format_directory_name(string)
-		split_by_space = string.split(" ")
+	def format_directory_name(opt={})
+		name = opt[:name] || @name
+		split_by_space = name.split(" ")
 		@formated_dir_name = split_by_space.join("_")
 	end
 end

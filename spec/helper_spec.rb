@@ -9,17 +9,17 @@ describe "Helper" do
 		end
 		it "replace spaces in :directory_name with undescores" do
 			helper = Helper.new
-			expect(helper.format_directory_name("test test")).to eq("test_test")
+			expect(helper.format_directory_name({:name => "test test"})).to eq("test_test")
 		end
 		it "return custom date format" do 
 			helper = Helper.new
 			date = Date.new(2018,10,27)
-			expect(helper.get_formated_date(date)).to eq("20181027")
+			expect(helper.get_formated_date({:date => date})).to eq("20181027")
 		end
 		it "create directory from :formated_dir_name in :current_dir" do
 			helper = Helper.new
 			name = "test"
-			helper.create_directory(name)
+			helper.create_directory({:name => name})
 			expect(Dir.entries('.').include?(name)).to be true
 			Dir.rmdir(name)
 		end
